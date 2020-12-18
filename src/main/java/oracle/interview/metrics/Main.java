@@ -2,6 +2,7 @@ package oracle.interview.metrics;
 
 import oracle.interview.implementation.MetricReaderImplementation;
 import oracle.interview.implementation.MetricWriterImplementation;
+import oracle.interview.utils.MetricsException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, MetricsException {
         MetricReader reader = new MetricReaderImplementation();
         try (FileInputStream fis = new FileInputStream(findFile("metrics_data.xml"))) {
             List<TargetMetricsContainer> metrics = reader.readMetrics(fis);
@@ -21,7 +22,7 @@ public class Main {
         }
     }
 
-    private static void writeAllMetrics(List<TargetMetricsContainer> metrics) {
+    private static void writeAllMetrics(List<TargetMetricsContainer> metrics) throws MetricsException {
 
         try (RandomlyFailingMetricStorage storage = new RandomlyFailingMetricStorage()) {
             MetricWriter writer = new MetricWriterImplementation(storage);

@@ -13,3 +13,5 @@ gradle-app.setting
 
 # IDE cache data
 .idea/
+
+.DS_Store
